@@ -1,6 +1,7 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.Hardware;
+using Android.Media;
 using Android.OS;
 using Android.Runtime;
 using Android.Views.Animations;
@@ -90,9 +91,18 @@ public class MainActivity : AppCompatActivity, ISensorEventListener
         if (vibrator == null)
             return;
 
-        if (OperatingSystem.IsAndroidVersionAtLeast(26))
+        if (OperatingSystem.IsAndroidVersionAtLeast(33))
         {
-            vibrator.Vibrate(VibrationEffect.CreateOneShot(100, 255));
+            vibrator.Vibrate(VibrationEffect.CreateOneShot(100, 255)!, VibrationAttributes.CreateForUsage((int)VibrationAttributesUsageType.Alarm));
+        }
+        else if (OperatingSystem.IsAndroidVersionAtLeast(26))
+        {
+            vibrator.Vibrate(
+                VibrationEffect.CreateOneShot(100, 255),
+                new AudioAttributes.Builder()
+                    .SetUsage(AudioUsageKind.Alarm)!
+                    .Build()
+            );
         }
         else
         {
