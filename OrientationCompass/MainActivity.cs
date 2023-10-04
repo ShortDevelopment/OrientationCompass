@@ -31,6 +31,7 @@ public class MainActivity : AppCompatActivity, ISensorEventListener
         var sensorManager = (SensorManager?)GetSystemService(Context.SensorService) ?? throw new InvalidOperationException("Could not get sensor service");
         var sensor = sensorManager.GetDefaultSensor(SensorType.Orientation) ?? throw new InvalidOperationException("Could not get sensor");
         sensorManager.RegisterListener(this, sensor, SensorDelay.Ui);
+        // ToDo: Cleanup
 
         ActivityCompat.RequestPermissions(this, new[] { Android.Manifest.Permission.Vibrate }, 0);
     }
@@ -63,6 +64,8 @@ public class MainActivity : AppCompatActivity, ISensorEventListener
             FillAfter = true
         };
 
+        System.Diagnostics.Debug.Print(degrees.ToString());
+
         Vibrate(_vibrator, degrees);
 
         _image.StartAnimation(animation);
@@ -80,7 +83,8 @@ public class MainActivity : AppCompatActivity, ISensorEventListener
 
     static void Vibrate(Vibrator? vibrator, float angle)
     {
-        if (angle != 0)
+        const int threshold = 10;
+        if (angle > threshold && angle < 360 - threshold)
             return;
 
         if (vibrator == null)
@@ -88,7 +92,7 @@ public class MainActivity : AppCompatActivity, ISensorEventListener
 
         if (OperatingSystem.IsAndroidVersionAtLeast(26))
         {
-            vibrator.Vibrate(VibrationEffect.CreateOneShot(100, VibrationEffect.DefaultAmplitude));
+            vibrator.Vibrate(VibrationEffect.CreateOneShot(100, 255));
         }
         else
         {
