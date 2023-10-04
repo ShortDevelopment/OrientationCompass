@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0-android</TargetFramework>
+		<SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
+		<OutputType>Exe</OutputType>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationId>de.shortdev.orientation_compass</ApplicationId>
+		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="..\README.md" />
+		<Content Include="..\Privacy.md" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Xamarin.AndroidX.Core" Version="1.12.0.1" />
+		<PackageReference Include="Xamarin.Google.Android.Material" Version="1.9.0.3" />
+	</ItemGroup>
+</Project>
